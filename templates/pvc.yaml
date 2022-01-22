@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "vmspin.fullname" . }}-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: microk8s-hostpath
+  resources:
+    requests:
+      {{- if not .Values.storage }}
+      storage: 30Gi
+      {{- else }}
+      storage: {{ .Values.storage }}
+      {{- end }}

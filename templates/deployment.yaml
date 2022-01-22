@@ -1,0 +1,28 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  name: {{ include "vmspin.fullname" . }}
+spec:
+  running: {{ .Values.running }}
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: {{ include "vmspin.fullname" . }}
+    spec:
+      domain:
+        cpu:
+          cores: {{ .Values.cores }}
+        devices:
+          disks:
+            - disk:
+                bus: virtio
+              name: harddrive
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: {{ .Values.memory }}
+      volumes:
+        - name: harddrive
+          persistentVolumeClaim:
+            claimName: {{ include "vmspin.fullname" . }}-pvc

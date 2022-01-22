@@ -1,0 +1,15 @@
+1. Get the application URL by running these commands:
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "vmspin.fullname" . }}'
+
+Execute the following commands:
+=====
+
+export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "vmspin.fullname" . }}-lb --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+export PV=$(kubectl get pvc --namespace {{ .Release.Namespace }} {{ include "vmspin.fullname" . }}-pvc --template "{{"{{ .spec.volumeName }}"}}")
+export DESTINATION=$(kubectl get pv --namespace {{ .Release.Namespace }} $PV --template "{{"{{ .spec.hostPath.path }}"}}")
+sudo cp ~/kubevirt/disk.img $DESTINATION
+virtctl start {{ include "vmspin.fullname" . }} -n {{ .Release.Namespace }}
+echo ssh $SERVICE_IP
+
+=====

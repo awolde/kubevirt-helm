@@ -1,0 +1,6 @@
+cores: 1
+memory: 2Gi
+running: false
+targetPort: 80
+port: 80
+storage: 30Gi

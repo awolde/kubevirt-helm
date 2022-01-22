@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "vmspin.fullname" . }}-test-connection"
+  labels:
+    {{- include "vmspin.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['nc']
+      args: ['{{ include "vmspin.fullname" . }} {{ .Values.port }} -w 1']
+  restartPolicy: Never
