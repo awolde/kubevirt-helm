@@ -24,3 +24,9 @@ echo ssh $SERVICE_IP
 
 =====
 ```
+
+Once the vm has booted, you can edit the vm object and set `running: true`.
+
+```
+kubectl edit vm/vm-name
+```
