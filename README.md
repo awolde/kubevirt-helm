@@ -1,6 +1,6 @@
 # kubevirt-helm
 
-Spins up vms inside K8s using [kubevirt](kubevirt.io)
+Spins up vms inside K8s using [kubevirt](https://kubevirt.io)
 
 ## Pre-req
 - virtctl
